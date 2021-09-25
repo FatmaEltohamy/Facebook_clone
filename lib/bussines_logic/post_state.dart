@@ -1,6 +1,9 @@
 part of 'post_cubit.dart';
 
-@immutable
-abstract class PostState {}
 
-class PostInitial extends PostState {}
+
+class PostState  {
+final bool isLoading;
+
+PostState({required this.isLoading});
+}

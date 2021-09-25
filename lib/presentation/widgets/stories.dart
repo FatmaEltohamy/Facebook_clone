@@ -3,6 +3,7 @@ import 'package:facebook/constants/my_colors.dart';
 import 'package:facebook/data/models/story.dart';
 import 'package:facebook/data/models/user.dart';
 import 'package:facebook/presentation/widgets/profile_avatar.dart';
+import 'package:facebook/presentation/widgets/responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class Stories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200.0,
-      color: Colors.white,
+      color: Responsive.isDesktop(context) ? Colors.transparent : Colors.white,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
@@ -69,8 +70,13 @@ class _CartStory extends StatelessWidget {
           height: double.infinity,
           width: 110.0,
           decoration: BoxDecoration(
-            gradient: MyColors.storyGradient,
-            borderRadius: BorderRadius.circular(12.0),
+              gradient: MyColors.storyGradient,
+              borderRadius: BorderRadius.circular(12.0),
+              boxShadow: Responsive.isDesktop(context) ? const [
+                BoxShadow(color: Colors.black26,
+                    offset: Offset(0, 2),
+                    blurRadius: 2.0),
+              ]:null
           ),
         ),
         Positioned(
@@ -78,23 +84,23 @@ class _CartStory extends StatelessWidget {
           left: 8.0,
           child: isAddStory
               ? Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
-                      color: Colors.white, shape: BoxShape.circle),
-                  child: IconButton(
-                    padding: EdgeInsets.zero,
-                    icon: Icon(
-                      Icons.add,
-                      color: MyColors.facebookBlue,
-                    ),
-                    onPressed: () => print('add story'),
-                  ),
-                )
+            height: 40.0,
+            width: 40.0,
+            decoration: BoxDecoration(
+                color: Colors.white, shape: BoxShape.circle),
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                Icons.add,
+                color: MyColors.facebookBlue,
+              ),
+              onPressed: () => print('add story'),
+            ),
+          )
               : ProfileAvatar(
-                  imgUrl: story!.user!.imgUrl,
-                  hasBorder: !story!.isViewed,
-                ),
+            imgUrl: story!.user!.imgUrl,
+            hasBorder: !story!.isViewed,
+          ),
         ),
         Positioned(
           bottom: 8.0,
@@ -106,7 +112,7 @@ class _CartStory extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
             maxLines: 2,
-            overflow:TextOverflow.ellipsis ,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
